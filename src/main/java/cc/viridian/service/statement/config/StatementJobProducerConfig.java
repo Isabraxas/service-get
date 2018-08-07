@@ -1,4 +1,4 @@
-package cc.viridian.service.statement.service;
+package cc.viridian.service.statement.config;
 
 import cc.viridian.service.statement.payload.JobTemplate;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class JobKafkaProducerConfig {
+public class StatementJobProducerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 

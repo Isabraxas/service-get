@@ -1,4 +1,4 @@
-package cc.viridian.service.statement.service;
+package cc.viridian.service.statement.config;
 
 import cc.viridian.service.statement.payload.JobTemplate;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Configuration
 @EnableKafka
-public class JobKafkaListenerConfig {
+public class StatementJobListenerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 

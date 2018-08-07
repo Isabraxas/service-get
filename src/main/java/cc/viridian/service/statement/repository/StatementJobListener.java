@@ -1,4 +1,4 @@
-package cc.viridian.service.statement.service;
+package cc.viridian.service.statement.repository;
 
 import cc.viridian.provider.CoreBankProvider;
 import cc.viridian.provider.model.Statement;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 @Service
 @Slf4j
-public class JobKafkaListener {
+public class StatementJobListener {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
