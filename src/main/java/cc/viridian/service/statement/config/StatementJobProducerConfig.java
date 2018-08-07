@@ -18,8 +18,8 @@ public class StatementJobProducerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-    @Value("${topic.statement.jobs}")
-    private String topicStatementJobs;
+    @Value("${topic.statement.sender}")
+    private String topicStatementSender;
 
     @Bean
     public Map<String, Object> producerConfigs() {
@@ -37,7 +37,7 @@ public class StatementJobProducerConfig {
     @Bean
     public KafkaTemplate<String, JobTemplate> kafkaTemplate() {
         KafkaTemplate<String, JobTemplate> template = new KafkaTemplate<>(producerFactory());
-        template.setDefaultTopic(topicStatementJobs);
+        template.setDefaultTopic(topicStatementSender);
         return template;
     }
 }
