@@ -17,11 +17,12 @@ public class StatementJobListener {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-    @Autowired
-    StatementProducer statementJobProducer;
+    private ProcessJobService processJobService;
 
     @Autowired
-    ProcessJobService processJobService;
+    public StatementJobListener(ProcessJobService processJobService) {
+        this.processJobService = processJobService;
+    }
 
     @KafkaListener(topics = "${topic.statement.jobs}")
     public void receive(@Payload JobTemplate data,

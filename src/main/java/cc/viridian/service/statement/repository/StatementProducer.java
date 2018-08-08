@@ -16,6 +16,11 @@ public class StatementProducer {
     @Autowired
     private KafkaTemplate<String, Statement> kafkaTemplate;
 
+    @Autowired
+    public StatementProducer(KafkaTemplate<String, Statement> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
+
     public void send(String messageKey, Statement data){
         log.debug("sending Statement for account  "+ data.getHeader().toString() + " with key " + messageKey);
 
