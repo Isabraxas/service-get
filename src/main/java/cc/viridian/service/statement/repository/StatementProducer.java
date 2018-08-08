@@ -22,7 +22,7 @@ public class StatementProducer {
     }
 
     public void send(String messageKey, Statement data){
-        log.debug("sending Statement for account  "+ data.getHeader().toString() + " with key " + messageKey);
+        log.debug("sending Statement for account  "+ data.getHeader().getAccountCode() + " with key " + messageKey);
 
         Message<Statement> message = MessageBuilder
             .withPayload(data)

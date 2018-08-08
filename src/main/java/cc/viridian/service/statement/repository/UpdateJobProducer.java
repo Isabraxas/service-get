@@ -21,8 +21,7 @@ public class UpdateJobProducer {
     private KafkaTemplate<String, UpdateJobTemplate> kafkaTemplate;
 
     public void send(String messageKey, UpdateJobTemplate data){
-        log.debug("sending updates for job "+ data.getId() + " with key " + messageKey);
-        log.debug( data.toString());
+        log.debug("sending updates for account "+ data.getAccount() + " with key " + messageKey);
 
         Message<UpdateJobTemplate> message = MessageBuilder
             .withPayload(data)
