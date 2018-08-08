@@ -1,4 +1,4 @@
-package cc.viridian.service.statement.payload;
+package cc.viridian.service.statement.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class JobUpdatedTemplate {
+public class JobTemplate {
+    private Long id;
     private String account;
     private String currency;
     private String type;

@@ -1,6 +1,6 @@
 package cc.viridian.service.statement.config;
 
-import cc.viridian.service.statement.payload.JobTemplate;
+import cc.viridian.provider.model.Statement;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class StatementJobProducerConfig {
+public class StatementProducerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
@@ -30,13 +30,13 @@ public class StatementJobProducerConfig {
         return props;
     }
 
-    private ProducerFactory<String, JobTemplate> producerFactory() {
+    private ProducerFactory<String, Statement> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, JobTemplate> kafkaTemplate() {
-        KafkaTemplate<String, JobTemplate> template = new KafkaTemplate<>(producerFactory());
+    public KafkaTemplate<String, Statement> kafkaTemplate() {
+        KafkaTemplate<String, Statement> template = new KafkaTemplate<>(producerFactory());
         template.setDefaultTopic(topicStatementSender);
         return template;
     }

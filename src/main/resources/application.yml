@@ -12,6 +12,6 @@ spring:
 
 topic:
   statement:
-    jobs: jobs1
-    sender: sender1
+    jobs: jobs2
+    sender: sender2
 

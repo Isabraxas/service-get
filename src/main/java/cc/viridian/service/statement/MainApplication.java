@@ -1,14 +1,11 @@
 package cc.viridian.service.statement;
 
-import cc.viridian.provider.model.Statement;
-import cc.viridian.service.statement.service.ScheduleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@EnableScheduling
+//@EnableScheduling
 @Slf4j
 public class MainApplication {
 
