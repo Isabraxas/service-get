@@ -1,9 +1,12 @@
 package cc.viridian.service.statement.config;
 
-import cc.viridian.provider.model.Statement;
+import cc.viridian.service.statement.model.JobTemplate;
+import cc.viridian.service.statement.model.SenderTemplate;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,12 +19,15 @@ import java.util.Map;
 
 @Configuration
 @Slf4j
-public class StatementProducerConfig {
+public class SenderProducerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
     @Value("${topic.statement.sender}")
     private String topicStatementSender;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Bean
     public Map<String, Object> producerConfigs() {
@@ -32,13 +38,19 @@ public class StatementProducerConfig {
         return props;
     }
 
-    private ProducerFactory<String, Statement> producerFactory() {
-        return new DefaultKafkaProducerFactory<>(producerConfigs());
+    private ProducerFactory<String, SenderTemplate> producerFactory() {
+        DefaultKafkaProducerFactory<String, SenderTemplate> producerFactory =
+            new DefaultKafkaProducerFactory<>(producerConfigs(),
+                                              new StringSerializer(),
+                                              new JsonSerializer<SenderTemplate>(objectMapper)
+            );
+        return producerFactory;
+
     }
 
     @Bean(name = "StatementTemplate")
-    public KafkaTemplate<String, Statement> kafkaTemplate() {
-        KafkaTemplate<String, Statement> template = new KafkaTemplate<>(producerFactory());
+    public KafkaTemplate<String, SenderTemplate> kafkaTemplate() {
+        KafkaTemplate<String, SenderTemplate> template = new KafkaTemplate<>(producerFactory());
         template.setDefaultTopic(topicStatementSender);
         log.info("creating kafka producer for topic: " + topicStatementSender);
         return template;

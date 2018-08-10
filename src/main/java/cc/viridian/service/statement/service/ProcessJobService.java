@@ -5,8 +5,9 @@ import cc.viridian.provider.payload.GetStatementResponse;
 import cc.viridian.provider.spi.CoreBank;
 import cc.viridian.service.statement.config.CorebankAdapterConfig;
 import cc.viridian.service.statement.model.JobTemplate;
+import cc.viridian.service.statement.model.SenderTemplate;
 import cc.viridian.service.statement.model.UpdateJobTemplate;
-import cc.viridian.service.statement.repository.StatementProducer;
+import cc.viridian.service.statement.repository.SenderProducer;
 import cc.viridian.service.statement.repository.UpdateJobProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +18,14 @@ import java.time.LocalDateTime;
 @Slf4j
 public class ProcessJobService {
 
-    private StatementProducer statementProducer;
+    private SenderProducer statementProducer;
 
     private UpdateJobProducer updateJobProducer;
 
     private CorebankAdapterConfig corebankAdapterConfig;
 
     @Autowired
-    public ProcessJobService(StatementProducer statementProducer, UpdateJobProducer updateJobProducer, CorebankAdapterConfig corebankAdapterConfig) {
+    public ProcessJobService(SenderProducer statementProducer, UpdateJobProducer updateJobProducer, CorebankAdapterConfig corebankAdapterConfig) {
         this.statementProducer = statementProducer;
         this.updateJobProducer = updateJobProducer;
         this.corebankAdapterConfig = corebankAdapterConfig;
@@ -63,7 +64,22 @@ public class ProcessJobService {
             if (response.getStatement() != null) {
                 log.debug(response.getStatement().toString());
                 //send the statement to sender queue
-                statementProducer.send(data.getId().toString(), statement);
+                SenderTemplate senderTemplate = new SenderTemplate();
+                senderTemplate.setStatement(statement);
+                senderTemplate.setAccount(data.getAccount());
+                senderTemplate.setAttemptNumber(data.getAttemptNumber());
+                senderTemplate.setCurrency(data.getCurrency());
+                senderTemplate.setCustomerCode(data.getCustomerCode());
+                senderTemplate.setDateFrom(data.getDateFrom());
+                senderTemplate.setFormatAdapter(data.getFormatAdapter());
+                senderTemplate.setSendAdapter(data.getSendAdapter());
+                senderTemplate.setDateTo(data.getDateTo());
+                senderTemplate.setFrequency(data.getFrequency());
+                senderTemplate.setId(data.getId());
+                senderTemplate.setRecipient(data.getRecipient());
+
+                statementProducer.send(data.getId().toString(), senderTemplate);
+
                 return sendNormalUpdateJob(data);
             }
             //error

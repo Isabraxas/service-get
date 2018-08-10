@@ -13,6 +13,6 @@ spring:
 topic:
   statement:
     jobs: jobs2
-    sender: sender2
+    sender: sender4
     update: update3
 
