@@ -18,6 +18,5 @@ public class UpdateJobTemplate {
     private String errorCode;
     private String errorDesc;
     private LocalDateTime localDateTime;
-    private Integer retryNumber;
-
+    private Boolean shouldTryAgain;
 }

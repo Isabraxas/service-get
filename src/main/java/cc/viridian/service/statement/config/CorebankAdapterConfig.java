@@ -2,6 +2,7 @@ package cc.viridian.service.statement.config;
 
 import cc.viridian.provider.CoreBankProvider;
 import cc.viridian.provider.CorebankConfig;
+import cc.viridian.provider.spi.CoreBank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,15 @@ public class CorebankAdapterConfig {
             log.info(config.getName() + " " + config.getClassName());
         }
         return loadedClasses;
+    }
+
+    //@Bean
+    public CoreBank getCorebankAdapter (String corebankId) {
+        if (loadedClasses.containsKey(corebankId)) {
+            return loadedClasses.get(corebankId).getAdapter();
+        } else {
+            return null;
+        }
     }
 
 }

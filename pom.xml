@@ -71,14 +71,22 @@
 			<version>2.1.7.RELEASE</version>
 		</dependency>
 
-		<dependency>
-			<artifactId>core-bank-provider</artifactId>
-			<groupId>cc.viridian</groupId>
-			<version>0.0.5</version>
-			<scope>system</scope>
-			<systemPath>/Users/fernando/viridian/baneco/core-bank-provider/target/core-bank-provider-0.0.5.jar
-			</systemPath>
-		</dependency>
+        <dependency>
+            <artifactId>core-bank-provider</artifactId>
+            <groupId>cc.viridian</groupId>
+            <version>0.0.7</version>
+            <scope>system</scope>
+            <systemPath>/Users/fernando/viridian/baneco/core-bank-provider/target/core-bank-provider-0.0.7.jar
+            </systemPath>
+        </dependency>
+        <dependency>
+            <artifactId>sample-bank</artifactId>
+            <groupId>cc.viridian</groupId>
+            <version>0.0.7</version>
+            <scope>system</scope>
+            <systemPath>/Users/fernando/viridian/baneco/sample-bank/target/sample-bank-0.0.7.jar
+            </systemPath>
+        </dependency>
 
 	</dependencies>
 
@@ -109,8 +117,8 @@
 	<repositories>
 		<repository>
 			<id>central</id>
-			<name>minipc2-releases</name>
-			<url>http://minipc2:8081/artifactory/libs-release</url>
+            <name>desarrollo-releases</name>
+            <url>http://desarrollo.viridian.cc:8081/artifactory/libs-release</url>
 		</repository>
 
 	</repositories>

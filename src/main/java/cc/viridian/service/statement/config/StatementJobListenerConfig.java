@@ -1,8 +1,11 @@
 package cc.viridian.service.statement.config;
 
 import cc.viridian.service.statement.model.JobTemplate;
+import cc.viridian.service.statement.model.UpdateJobTemplate;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +24,9 @@ public class StatementJobListenerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     @Bean
     public Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>();
@@ -34,10 +40,20 @@ public class StatementJobListenerConfig {
 
     @Bean
     public ConsumerFactory<String, JobTemplate> consumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(
+
+        JsonDeserializer<JobTemplate> jsonDeserializer = new JsonDeserializer(JobTemplate.class, objectMapper);
+
+        DefaultKafkaConsumerFactory<String, JobTemplate> consumerFactory = new DefaultKafkaConsumerFactory<>(
             consumerConfigs(),
             new StringDeserializer(),
-            new JsonDeserializer<>(JobTemplate.class));
+            jsonDeserializer);
+
+        return consumerFactory;
+
+        //return new DefaultKafkaConsumerFactory<>(
+        //    consumerConfigs(),
+        //    new StringDeserializer(),
+        //    new JsonDeserializer<>(JobTemplate.class));
     }
 
     @Bean
