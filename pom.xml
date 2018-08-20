@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.viridian.service</groupId>
-	<artifactId>get-statement</artifactId>
-	<version>0.0.1</version>
+	<artifactId>service-statement-get</artifactId>
+	<version>0.1.SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>get-statement</name>
+	<name>service-statement-get</name>
 	<description>Bank statements project for Spring Boot</description>
 
 	<properties>
@@ -56,25 +56,20 @@
 		</dependency>
 
         <dependency>
-            <artifactId>core-bank-provider</artifactId>
+            <artifactId>provider-corebank</artifactId>
             <groupId>cc.viridian</groupId>
-            <version>0.0.8</version>
-<!-- for dev purposes
-            <scope>system</scope>
-            <systemPath>/Users/fernando/viridian/baneco/core-bank-provider/target/core-bank-provider-0.0.7.jar
-            </systemPath>
-            !-->
+            <version>0.1.40</version>
         </dependency>
-        <dependency>
-            <artifactId>sample-bank</artifactId>
-            <groupId>cc.viridian</groupId>
-            <version>0.0.8</version>
-<!--
-            <scope>system</scope>
-            <systemPath>/Users/fernando/viridian/baneco/sample-bank/target/sample-bank-0.0.7.jar
-            </systemPath>
--->
+		<!--
+                <dependency>
+                    <artifactId>sample-bank</artifactId>
+                    <groupId>cc.viridian</groupId>
+                    <version>0.0.8</version>
+                    <scope>system</scope>
+                    <systemPath>/Users/fernando/viridian/baneco/sample-bank/target/sample-bank-0.0.7.jar
+                    </systemPath>
         </dependency>
+        -->
 
 	</dependencies>
 
