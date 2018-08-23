@@ -3,6 +3,7 @@ package cc.viridian.service.statement.config;
 import cc.viridian.service.statement.model.JobTemplate;
 import cc.viridian.service.statement.model.UpdateJobTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,13 @@ import java.util.Map;
 
 @Configuration
 @EnableKafka
+@Slf4j
 public class StatementJobListenerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
+
+    @Value("${topic.statement.jobs}")
+    private String topicStatementJobs;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -35,6 +40,8 @@ public class StatementJobListenerConfig {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "get-statement-service");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        log.info("listening kafka server: " + bootstrapServers);
+        log.info("listening kafka  topic: " + topicStatementJobs);
         return props;
     }
 
