@@ -58,18 +58,8 @@
         <dependency>
             <artifactId>provider-corebank</artifactId>
             <groupId>cc.viridian</groupId>
-            <version>0.1.40</version>
+            <version>0.1.48</version>
         </dependency>
-		<!--
-                <dependency>
-                    <artifactId>sample-bank</artifactId>
-                    <groupId>cc.viridian</groupId>
-                    <version>0.0.8</version>
-                    <scope>system</scope>
-                    <systemPath>/Users/fernando/viridian/baneco/sample-bank/target/sample-bank-0.0.7.jar
-                    </systemPath>
-        </dependency>
-        -->
 
 	</dependencies>
 
