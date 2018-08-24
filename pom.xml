@@ -77,7 +77,12 @@
 					<executable>true</executable>
 				</configuration>
 			</plugin>
-		</plugins>
+            <plugin>
+                <groupId>io.spring.javaformat</groupId>
+                <artifactId>spring-javaformat-maven-plugin</artifactId>
+                <version>0.0.6</version>
+            </plugin>
+        </plugins>
 	</build>
 
 	<dependencyManagement>
@@ -100,22 +105,7 @@
 		</repository>
 	</repositories>
     <reporting>
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
-            <version>3.0.0</version>
-            <configuration>
-                <configLocation>CodeStyle.xml</configLocation>
-            </configuration>
-            <reportSets>
-                <reportSet>
-                    <reports>
-                        <report>checkstyle</report>
-                    </reports>
-                </reportSet>
-            </reportSets>
-        </plugin>
-    </plugins>
+        <plugins>
+        </plugins>
     </reporting>
 </project>

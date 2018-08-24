@@ -9,10 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Slf4j
 public class MainApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MainApplication.class, args);
-
-		//sandbox
+    /**
+     * Main Application.
+     *
+     * @param args
+     */
+    public static void main(final String[] args) {
+        SpringApplication.run(MainApplication.class, args);
     }
-
 }
