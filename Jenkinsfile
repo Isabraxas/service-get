@@ -20,6 +20,8 @@ node {
     }
     stage('test') {
         dir(repoName) {
+            sh "mvn checkstyle:checkstyle"
+            checkstyle
             sh "mvn -Dbuild.number=${BUILD_NUMBER} -Dmaven.test.failure.ignore package"
             archiveArtifacts "target/" + artifactName
         }
