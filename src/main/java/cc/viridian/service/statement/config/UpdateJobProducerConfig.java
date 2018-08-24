@@ -19,16 +19,14 @@ import java.util.Map;
 @Configuration
 @Slf4j
 public class UpdateJobProducerConfig {
+    @Autowired
+    ObjectMapper objectMapper;
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
-
     @Value("${topic.statement.update}")
     private String topicStatementUpdate;
 
-    @Autowired
-    ObjectMapper objectMapper;
-
-    @Bean(name="producer-update")
+    @Bean(name = "producer-update")
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -39,11 +37,11 @@ public class UpdateJobProducerConfig {
 
     private ProducerFactory<String, UpdateJobTemplate> producerFactory() {
         DefaultKafkaProducerFactory<String, UpdateJobTemplate> producerFactory =
-             new DefaultKafkaProducerFactory<>(producerConfigs(),
-                                               new StringSerializer(),
-                                               new JsonSerializer<UpdateJobTemplate>(objectMapper)
-                                               );
-         return producerFactory;
+            new DefaultKafkaProducerFactory<>(producerConfigs(),
+                                              new StringSerializer(),
+                                              new JsonSerializer<UpdateJobTemplate>(objectMapper)
+            );
+        return producerFactory;
     }
 
     @Bean(name = "UpdateJobTemplate")
@@ -53,5 +51,4 @@ public class UpdateJobProducerConfig {
         log.info("creating kafka producer for topic: " + topicStatementUpdate);
         return template;
     }
-
 }

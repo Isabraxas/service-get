@@ -12,12 +12,14 @@ import java.io.IOException;
 public class JobTemplateDeserializer extends JsonDeserializer<JobTemplate> {
 
     @Override
-    public JobTemplate deserialize(JsonParser p, DeserializationContext ctxt, JobTemplate intoValue) throws IOException {
+    public JobTemplate deserialize(JsonParser p, DeserializationContext ctxt, JobTemplate intoValue)
+            throws IOException {
         return super.deserialize(p, ctxt, intoValue);
     }
 
     @Override
-    public JobTemplate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public JobTemplate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+            throws IOException, JsonProcessingException {
         ObjectCodec oc = jsonParser.getCodec();
         JsonNode node = oc.readTree(jsonParser);
         System.out.println(node);

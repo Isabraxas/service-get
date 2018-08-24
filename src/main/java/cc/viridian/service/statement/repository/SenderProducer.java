@@ -21,8 +21,9 @@ public class SenderProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void send(String messageKey, SenderTemplate data){
-        log.debug("sending Statement for account  "+ data.getStatement().getHeader().getAccountCode() + " with key " + messageKey);
+    public void send(String messageKey, SenderTemplate data) {
+        log.debug("sending Statement for account  " + data.getStatement().getHeader().getAccountCode()
+                      + " with key " + messageKey);
 
         Message<SenderTemplate> message = MessageBuilder
             .withPayload(data)

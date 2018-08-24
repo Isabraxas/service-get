@@ -25,7 +25,8 @@ public class ProcessJobService {
     private CorebankAdapterConfig corebankAdapterConfig;
 
     @Autowired
-    public ProcessJobService(SenderProducer statementProducer, UpdateJobProducer updateJobProducer, CorebankAdapterConfig corebankAdapterConfig) {
+    public ProcessJobService(SenderProducer statementProducer, UpdateJobProducer updateJobProducer,
+                             CorebankAdapterConfig corebankAdapterConfig) {
         this.statementProducer = statementProducer;
         this.updateJobProducer = updateJobProducer;
         this.corebankAdapterConfig = corebankAdapterConfig;
@@ -42,7 +43,9 @@ public class ProcessJobService {
         log.debug("Corebank adapter class: " + coreBank.getClass().getName());
         log.debug("processing statement from " + data.getDateFrom() + " to " + data.getDateTo());
 
-        GetStatementResponse response = coreBank.getStatement(data.getAccount(), data.getType(), data.getCurrency(), data.getDateFrom(), data.getDateTo() );
+        GetStatementResponse response = coreBank.getStatement(data.getAccount(), data.getType(), data.getCurrency(),
+                                                              data.getDateFrom(), data.getDateTo()
+        );
 
         Statement statement = response.getStatement();
 
@@ -59,7 +62,6 @@ public class ProcessJobService {
             if (response.getErrorCode().equalsIgnoreCase("database-error")) {
                 return sendDatabaseErrorUpdateJob(data);
             }
-
         } else {
             if (response.getStatement() != null) {
                 log.debug(response.getStatement().toString());
@@ -84,7 +86,7 @@ public class ProcessJobService {
             }
             //error
         }
-        log.error("invalid response " +  response.getErrorCode());
+        log.error("invalid response " + response.getErrorCode());
         return null;  //shouldn't happen
     }
 
@@ -97,7 +99,7 @@ public class ProcessJobService {
         updateJob.setAccount(data.getAccount());
         updateJob.setAdapterType("corebank");
         updateJob.setAdapterCode(data.getCorebankAdapter());
-        updateJob.setErrorCode( "" );
+        updateJob.setErrorCode("");
         updateJob.setErrorDesc("");
         updateJob.setLocalDateTime(LocalDateTime.now());
         updateJob.setShouldTryAgain(false);
@@ -108,14 +110,16 @@ public class ProcessJobService {
 
     //return with invalid corebank adapter
     private UpdateJobTemplate sendInvalidCorebankAdapter(JobTemplate data) {
-        log.error("account " + data.getAccount() + " has an invalid or not loaded corebank adapter: " + data.getCorebankAdapter() );
+        log.error(
+            "account " + data.getAccount() + " has an invalid or not loaded corebank adapter: "
+                + data.getCorebankAdapter());
 
         UpdateJobTemplate updateJob = new UpdateJobTemplate();
         updateJob.setId(data.getId());
         updateJob.setAccount(data.getAccount());
         updateJob.setAdapterType("corebank");
         updateJob.setAdapterCode(data.getCorebankAdapter());
-        updateJob.setErrorCode( "invalid-adapter" );
+        updateJob.setErrorCode("invalid-adapter");
         updateJob.setErrorDesc("adapter " + data.getCorebankAdapter() + " is invalid or not loaded");
         updateJob.setLocalDateTime(LocalDateTime.now());
         updateJob.setShouldTryAgain(false);
@@ -130,14 +134,14 @@ public class ProcessJobService {
             + data.getCurrency() + " "
             + data.getType() + " is invalid on remote corebank: "
             + data.getCorebankAdapter();
-        log.error(message );
+        log.error(message);
 
         UpdateJobTemplate updateJob = new UpdateJobTemplate();
         updateJob.setId(data.getId());
         updateJob.setAccount(data.getAccount());
         updateJob.setAdapterType("corebank");
         updateJob.setAdapterCode(data.getCorebankAdapter());
-        updateJob.setErrorCode( "invalid-account" );
+        updateJob.setErrorCode("invalid-account");
         updateJob.setErrorDesc(message);
         updateJob.setLocalDateTime(LocalDateTime.now());
         updateJob.setShouldTryAgain(false);
@@ -155,7 +159,7 @@ public class ProcessJobService {
         updateJob.setAccount(data.getAccount());
         updateJob.setAdapterType("corebank");
         updateJob.setAdapterCode(data.getCorebankAdapter());
-        updateJob.setErrorCode( "network-error" );
+        updateJob.setErrorCode("network-error");
         updateJob.setErrorDesc("network error processing with adapter " + data.getCorebankAdapter() + "");
         updateJob.setLocalDateTime(LocalDateTime.now());
         updateJob.setShouldTryAgain(true);
@@ -173,7 +177,7 @@ public class ProcessJobService {
         updateJob.setAccount(data.getAccount());
         updateJob.setAdapterType("corebank");
         updateJob.setAdapterCode(data.getCorebankAdapter());
-        updateJob.setErrorCode( "database-error" );
+        updateJob.setErrorCode("database-error");
         updateJob.setErrorDesc("database error processing with adapter " + data.getCorebankAdapter() + "");
         updateJob.setLocalDateTime(LocalDateTime.now());
         updateJob.setShouldTryAgain(true);
