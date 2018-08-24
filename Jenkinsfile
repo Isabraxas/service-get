@@ -20,9 +20,6 @@ node {
             }
     }
     stage('Checkstyle') {
-        steps {
-           checkstyle pattern: 'target/site/checkstyle-result.xml'
-        }
         publishHTML ( [
             allowMissing: false,
             alwaysLinkToLastBuild: true,
