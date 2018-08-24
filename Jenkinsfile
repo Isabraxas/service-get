@@ -16,11 +16,26 @@ node {
         dir(repoName) {
             sh "sed -i \"s/SNAPSHOT/${BUILD_NUMBER}/g\" pom.xml"
             sh "mvn -Dbuild.number=${BUILD_NUMBER} -DskipTests clean package"
+            sh "mvn checkstyle:checkstyle"
+            }
+    }
+    stage('Checkstyle') {
+        steps {
+           checkstyle pattern: 'target/site/checkstyle-result.xml'
         }
+        publishHTML ( [
+            allowMissing: false,
+            alwaysLinkToLastBuild: true,
+            keepAll: false,
+            reportDir: 'target/site',
+            reportFiles: 'checkstyle.html',
+            reportName: 'HTML Report',
+            reportTitles: ''
+        ])
+
     }
     stage('test') {
         dir(repoName) {
-            sh "mvn checkstyle:checkstyle"
             checkstyle
             sh "mvn -Dbuild.number=${BUILD_NUMBER} -Dmaven.test.failure.ignore package"
             archiveArtifacts "target/" + artifactName
