@@ -18,7 +18,7 @@ public class CorebankAdapterConfig {
         return loadedClasses;
     }
 
-    //@Bean
+    @Bean
     public HashMap<String, CorebankConfig>  init() {
         CoreBankProvider coreBank = CoreBankProvider.getInstance();
         loadedClasses = coreBank.init();
