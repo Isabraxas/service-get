@@ -20,7 +20,7 @@ node {
     }
     stage('Checkstyle') {
         dir(repoName) {
-            sh "mvn checkstyle:checkstyle"
+            sh "mvn checkstyle:checkstyle -Dcheckstyle.config.location=viridian_checks.xml"
             publishHTML ( [
                 allowMissing: false,
                 alwaysLinkToLastBuild: true,
