@@ -25,8 +25,8 @@ public class StatementJobListener {
     }
 
     @KafkaListener(topics = "${topic.statement.jobs}")
-    public void receive(@Payload JobTemplate data,
-                        @Headers MessageHeaders headers) {
+    public void receive(@Payload final JobTemplate data,
+                        @Headers final MessageHeaders headers) {
         log.info("received message from topic: " + headers.get("kafka_receivedTopic")
                      + " key:" + headers.get("kafka_receivedMessageKey")
                      + " partition:" + headers.get("kafka_receivedPartitionId")

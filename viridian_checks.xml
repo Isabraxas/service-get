@@ -118,26 +118,32 @@
         <module name="AvoidInlineConditionals"/>
         <module name="EmptyStatement"/>
         <module name="EqualsHashCode"/>
-        <module name="HiddenField"/>
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
         <module name="MagicNumber"/>
         <module name="MissingSwitchDefault"/>
         <module name="SimplifyBooleanExpression"/>
         <module name="SimplifyBooleanReturn"/>
+        <!--
+        <module name="HiddenField"/>
+        -->
 
         <!-- Checks for class design                         -->
-        <!-- See http://checkstyle.sf.net/config_design.html -->
+        <!-- See http://checkstyle.sf.net/config_design.html
         <module name="DesignForExtension"/>
         <module name="FinalClass"/>
-        <module name="HideUtilityClassConstructor"/>
+        <module name="HideUtilityClassConstructor" value="true"/>
         <module name="InterfaceIsType"/>
         <module name="VisibilityModifier"/>
+        -->
 
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
         <module name="ArrayTypeStyle"/>
-        <module name="FinalParameters"/>
+        <module name="FinalParameters">
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="ignorePrimitiveTypes" value="true"/>
+        </module>
         <module name="TodoComment"/>
         <module name="UpperEll"/>
 

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduleTask {
 
+    static final int MILLISECONDS = 1000;
+
     /**
      * Placeholder for scheduler, currently is not used.
      */
@@ -14,7 +16,7 @@ public class ScheduleTask {
     //@Scheduled(fixedDelay = 1000)
     public void scheduleTaskUsingCronExpression() {
 
-        long now = System.currentTimeMillis() / 1000;
+        long now = System.currentTimeMillis() / MILLISECONDS;
         System.out.println("Current Thread : " +  Thread.currentThread().getName());
 
         //Statement statement = ScheduleService.getInstance().getRandomStatement();

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Slf4j
 public class ProcessJobService {
 
-    private SenderProducer statementProducer;
+    private SenderProducer statementProducer = null;
 
     private UpdateJobProducer updateJobProducer;
 
@@ -32,7 +32,7 @@ public class ProcessJobService {
         this.corebankAdapterConfig = corebankAdapterConfig;
     }
 
-    public UpdateJobTemplate process(JobTemplate data) {
+    public UpdateJobTemplate process(final JobTemplate data) {
         log.info("process getStatement: " + data.getAccount() + " " + data.getCorebankAdapter());
 
         CoreBank coreBank = corebankAdapterConfig.getCorebankAdapter(data.getCorebankAdapter());
@@ -91,7 +91,7 @@ public class ProcessJobService {
     }
 
     //return with Normal update
-    private UpdateJobTemplate sendNormalUpdateJob(JobTemplate data) {
+    private UpdateJobTemplate sendNormalUpdateJob(final JobTemplate data) {
         log.info("send updateJob for account: " + data.getAccount() + " " + data.getCorebankAdapter());
 
         UpdateJobTemplate updateJob = new UpdateJobTemplate();
@@ -109,7 +109,7 @@ public class ProcessJobService {
     }
 
     //return with invalid corebank adapter
-    private UpdateJobTemplate sendInvalidCorebankAdapter(JobTemplate data) {
+    private UpdateJobTemplate sendInvalidCorebankAdapter(final JobTemplate data) {
         log.error(
             "account " + data.getAccount() + " has an invalid or not loaded corebank adapter: "
                 + data.getCorebankAdapter());
@@ -129,7 +129,7 @@ public class ProcessJobService {
     }
 
     //return with invalid account in the remote corebank (closed, unexistent, invalid account, type or currency)
-    private UpdateJobTemplate sendInvalidAccount(JobTemplate data) {
+    private UpdateJobTemplate sendInvalidAccount(final JobTemplate data) {
         String message = "account " + data.getAccount() + " "
             + data.getCurrency() + " "
             + data.getType() + " is invalid on remote corebank: "
@@ -151,7 +151,7 @@ public class ProcessJobService {
     }
 
     //return with network error
-    private UpdateJobTemplate sendNetworkErrorUpdateJob(JobTemplate data) {
+    private UpdateJobTemplate sendNetworkErrorUpdateJob(final JobTemplate data) {
         log.error("network error processing account: " + data.getAccount() + " " + data.getCorebankAdapter());
 
         UpdateJobTemplate updateJob = new UpdateJobTemplate();
@@ -169,7 +169,7 @@ public class ProcessJobService {
     }
 
     //return with database error
-    private UpdateJobTemplate sendDatabaseErrorUpdateJob(JobTemplate data) {
+    private UpdateJobTemplate sendDatabaseErrorUpdateJob(final JobTemplate data) {
         log.error("database error processing account: " + data.getAccount() + " " + data.getCorebankAdapter());
 
         UpdateJobTemplate updateJob = new UpdateJobTemplate();
