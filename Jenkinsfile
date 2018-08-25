@@ -43,12 +43,17 @@ node {
 
         dir(repoName) {
             def committerEmail = sh (
-                script: 'git log -1 --pretty=format:\'%an\' ',
-                returnStdout: true
+                 script: 'git log -1 --pretty=format:\'%an\' ',
+                 returnStdout: true
+             ).trim()
+
+            def summary = sh (
+                 script: 'git log -1 --pretty=format:\'%s\' ',
+                 returnStdout: true
             ).trim()
 
             slackSend color: 'good',
-                message: artifactName + "* has been built _successfully_ \n" + committerEmail
+                message: "*" + artifactName + "* has been built _successfully_ \n" + summary + "\n" + committerEmail + "_"
 
             sh '/var/lib/jenkins/viridian/deploy-' + repoName + '.sh'
         }
