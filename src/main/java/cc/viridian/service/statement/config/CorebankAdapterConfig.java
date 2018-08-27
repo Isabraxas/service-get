@@ -36,6 +36,9 @@ public class CorebankAdapterConfig {
             log.info("Corebank Adapters:");
             for (CorebankConfig config : loadedClasses.values()) {
                 log.info(config.getName() + " " + config.getClassName());
+                String profile = "default";
+                String configServerUrl = "http://desarrollo.viridian.cc:7000";
+                config.loadConfigProperties(profile, configServerUrl);
             }
         } catch (Exception e) {
             e.printStackTrace();
