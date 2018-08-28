@@ -50,6 +50,7 @@ public class StatementJobListenerConfig {
 
     @Bean
     public ConsumerFactory<String, JobTemplate> consumerFactory() {
+        log.info("ConsumerFactory : " + topicStatementJobs);
 
         JsonDeserializer<JobTemplate> jsonDeserializer = new JsonDeserializer(JobTemplate.class, objectMapper);
 
@@ -68,6 +69,7 @@ public class StatementJobListenerConfig {
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, JobTemplate> kafkaListenerContainerFactory() {
+        log.info("ConcurrentKafkaListenerContainerFactory : " + topicStatementJobs);
         ConcurrentKafkaListenerContainerFactory<String, JobTemplate> factory =
             new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
