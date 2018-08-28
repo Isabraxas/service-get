@@ -44,12 +44,8 @@ public class ProcessJobService {
         log.debug("Corebank adapter class: " + coreBank.getClass().getName());
         log.debug("processing statement from " + data.getDateFrom() + " to " + data.getDateTo());
 
-        //todo: just to test
-        LocalDate start = LocalDate.now();
-        LocalDate end = LocalDate.now();
         GetStatementResponse response = coreBank.getStatement(data.getAccount(), data.getType(), data.getCurrency(),
-                                                              start, end
-//                                                              data.getDateFrom(), data.getDateTo()
+                                                              data.getDateFrom(), data.getDateTo()
         );
 
         Statement statement = response.getStatement();
@@ -77,10 +73,10 @@ public class ProcessJobService {
                 senderTemplate.setAttemptNumber(data.getAttemptNumber());
                 senderTemplate.setCurrency(data.getCurrency());
                 senderTemplate.setCustomerCode(data.getCustomerCode());
-                //senderTemplate.setDateFrom(data.getDateFrom());
+                senderTemplate.setDateFrom(data.getDateFrom());
                 senderTemplate.setFormatAdapter(data.getFormatAdapter());
                 senderTemplate.setSendAdapter(data.getSendAdapter());
-                //senderTemplate.setDateTo(data.getDateTo());
+                senderTemplate.setDateTo(data.getDateTo());
                 senderTemplate.setFrequency(data.getFrequency());
                 senderTemplate.setId(data.getId());
                 senderTemplate.setRecipient(data.getRecipient());

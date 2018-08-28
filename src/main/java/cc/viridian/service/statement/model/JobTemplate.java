@@ -25,10 +25,8 @@ public class JobTemplate {
 
     private String frequency;
 
-    //private LocalDate dateFrom;
-    //private LocalDate dateTo;
-    private String dateFrom;
-    private String dateTo;
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
 
     private Integer attemptNumber;
 }

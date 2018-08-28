@@ -21,8 +21,10 @@ import java.util.Map;
 public class UpdateJobProducerConfig {
     @Autowired
     ObjectMapper objectMapper;
+
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
+
     @Value("${topic.statement.update}")
     private String topicStatementUpdate;
 
@@ -39,8 +41,7 @@ public class UpdateJobProducerConfig {
         DefaultKafkaProducerFactory<String, UpdateJobTemplate> producerFactory =
             new DefaultKafkaProducerFactory<>(producerConfigs(),
                                               new StringSerializer(),
-                                              new JsonSerializer<UpdateJobTemplate>()
-                                              //new JsonSerializer<UpdateJobTemplate>(objectMapper)
+                                              new JsonSerializer<UpdateJobTemplate>(objectMapper)
             );
         return producerFactory;
     }

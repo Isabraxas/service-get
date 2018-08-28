@@ -2,6 +2,8 @@ package cc.viridian.service.statement.config;
 
 import cc.viridian.service.statement.model.JobTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
@@ -17,7 +21,6 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 @Configuration
 @EnableKafka
@@ -29,8 +32,11 @@ public class StatementJobListenerConfig {
     @Value("${topic.statement.jobs}")
     private String topicStatementJobs;
 
+    //@Autowired
+    //ObjectMapper objectMapper;
+
     @Autowired
-    ObjectMapper objectMapper;
+    private MappingJackson2HttpMessageConverter springMvcJacksonConverter;
 
     @Bean
     public Map<String, Object> consumerConfigs() {
@@ -41,8 +47,7 @@ public class StatementJobListenerConfig {
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "service-statement-get");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, "org.apache.kafka.clients.consumer.RoundRobinAssignor");
-        Random random = new Random();
-        props.put(ConsumerConfig.CLIENT_ID_CONFIG, "service-statement-get-" + random.nextInt(1000000) );
+
         log.info("listening kafka server: " + bootstrapServers);
         log.info("listening kafka  topic: " + topicStatementJobs);
         return props;
@@ -51,6 +56,14 @@ public class StatementJobListenerConfig {
     @Bean
     public ConsumerFactory<String, JobTemplate> consumerFactory() {
         log.info("ConsumerFactory : " + topicStatementJobs);
+
+        //ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().build();
+        //objectMapper.registerModule(new JavaTimeModule());
+        //objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        ObjectMapper objectMapper = springMvcJacksonConverter.getObjectMapper();
+        //objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         JsonDeserializer<JobTemplate> jsonDeserializer = new JsonDeserializer(JobTemplate.class, objectMapper);
 
