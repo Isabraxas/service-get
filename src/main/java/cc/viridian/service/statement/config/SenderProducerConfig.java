@@ -25,8 +25,8 @@ public class SenderProducerConfig {
     @Value("${topic.statement.sender}")
     private String topicStatementSender;
 
-    @Autowired
-    ObjectMapper objectMapper;
+    //@Autowired
+    //ObjectMapper objectMapper;
 
     @Bean
     public Map<String, Object> producerConfigs() {
@@ -41,7 +41,8 @@ public class SenderProducerConfig {
         DefaultKafkaProducerFactory<String, SenderTemplate> producerFactory =
             new DefaultKafkaProducerFactory<>(producerConfigs(),
                                               new StringSerializer(),
-                                              new JsonSerializer<SenderTemplate>(objectMapper)
+                                              new JsonSerializer<SenderTemplate>()
+                                              //new JsonSerializer<SenderTemplate>(objectMapper)
             );
         return producerFactory;
 

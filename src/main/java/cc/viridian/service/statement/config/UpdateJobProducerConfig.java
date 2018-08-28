@@ -39,7 +39,8 @@ public class UpdateJobProducerConfig {
         DefaultKafkaProducerFactory<String, UpdateJobTemplate> producerFactory =
             new DefaultKafkaProducerFactory<>(producerConfigs(),
                                               new StringSerializer(),
-                                              new JsonSerializer<UpdateJobTemplate>(objectMapper)
+                                              new JsonSerializer<UpdateJobTemplate>()
+                                              //new JsonSerializer<UpdateJobTemplate>(objectMapper)
             );
         return producerFactory;
     }
