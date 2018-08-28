@@ -12,6 +12,7 @@ import cc.viridian.service.statement.repository.UpdateJobProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -43,8 +44,12 @@ public class ProcessJobService {
         log.debug("Corebank adapter class: " + coreBank.getClass().getName());
         log.debug("processing statement from " + data.getDateFrom() + " to " + data.getDateTo());
 
+        //todo: just to test
+        LocalDate start = LocalDate.now();
+        LocalDate end = LocalDate.now();
         GetStatementResponse response = coreBank.getStatement(data.getAccount(), data.getType(), data.getCurrency(),
-                                                              data.getDateFrom(), data.getDateTo()
+                                                              start, end
+//                                                              data.getDateFrom(), data.getDateTo()
         );
 
         Statement statement = response.getStatement();
@@ -72,10 +77,10 @@ public class ProcessJobService {
                 senderTemplate.setAttemptNumber(data.getAttemptNumber());
                 senderTemplate.setCurrency(data.getCurrency());
                 senderTemplate.setCustomerCode(data.getCustomerCode());
-                senderTemplate.setDateFrom(data.getDateFrom());
+                //senderTemplate.setDateFrom(data.getDateFrom());
                 senderTemplate.setFormatAdapter(data.getFormatAdapter());
                 senderTemplate.setSendAdapter(data.getSendAdapter());
-                senderTemplate.setDateTo(data.getDateTo());
+                //senderTemplate.setDateTo(data.getDateTo());
                 senderTemplate.setFrequency(data.getFrequency());
                 senderTemplate.setId(data.getId());
                 senderTemplate.setRecipient(data.getRecipient());

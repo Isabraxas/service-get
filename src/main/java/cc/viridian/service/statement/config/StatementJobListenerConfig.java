@@ -42,7 +42,7 @@ public class StatementJobListenerConfig {
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, "org.apache.kafka.clients.consumer.RoundRobinAssignor");
         Random random = new Random();
-        props.put(ConsumerConfig.CLIENT_ID_CONFIG, "service-statement-get-" + random.nextLong() );
+        props.put(ConsumerConfig.CLIENT_ID_CONFIG, "service-statement-get-" + random.nextInt(1000000) );
         log.info("listening kafka server: " + bootstrapServers);
         log.info("listening kafka  topic: " + topicStatementJobs);
         return props;
