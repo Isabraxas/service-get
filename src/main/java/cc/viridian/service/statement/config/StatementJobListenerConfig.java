@@ -17,6 +17,7 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @Configuration
 @EnableKafka
@@ -40,6 +41,8 @@ public class StatementJobListenerConfig {
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "service-statement-get");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, "org.apache.kafka.clients.consumer.RoundRobinAssignor");
+        Random random = new Random();
+        props.put(ConsumerConfig.CLIENT_ID_CONFIG, "service-statement-get-" + random.nextLong() );
         log.info("listening kafka server: " + bootstrapServers);
         log.info("listening kafka  topic: " + topicStatementJobs);
         return props;
