@@ -6,7 +6,7 @@
 
     <groupId>com.viridian.service</groupId>
     <artifactId>service-statement-get</artifactId>
-    <version>0.1.SNAPSHOT</version>
+    <version>${artifact.version}</version>
     <packaging>jar</packaging>
 
     <name>service-statement-get</name>
@@ -18,6 +18,8 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
         <cayenne.version>4.0.RC1</cayenne.version>
+        <artifact.version>0.1.9999</artifact.version>
+        <provider.corebank.version>0.1.9906</provider.corebank.version>
     </properties>
 
     <parent>
@@ -58,7 +60,7 @@
         <dependency>
             <artifactId>provider-corebank</artifactId>
             <groupId>cc.viridian</groupId>
-            <version>0.1.58</version>
+            <version>${provider.corebank.version}</version>
         </dependency>
 
     </dependencies>
