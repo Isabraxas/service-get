@@ -19,7 +19,7 @@
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
         <cayenne.version>4.0.RC1</cayenne.version>
         <artifact.version>0.1.9999</artifact.version>
-        <provider.corebank.version>0.1.9906</provider.corebank.version>
+        <provider.corebank.version>0.1.72</provider.corebank.version>
     </properties>
 
     <parent>
@@ -67,6 +67,21 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Build-Jdk>${java.version} (${java.vendor} ${java.vm.version})</Build-Jdk>
+                            <Build-Version>${artifact.version}</Build-Version>
+                            <Build-OS>${os.name} ${os.arch} ${os.version}</Build-OS>
+                            <Specification-Version>${artifact.version}</Specification-Version>
+                            <Implementation-Version>${artifact.version}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
