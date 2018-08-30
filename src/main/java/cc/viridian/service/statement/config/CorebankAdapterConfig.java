@@ -83,15 +83,15 @@ public class CorebankAdapterConfig {
         Attributes attributes = new Attributes();
         String simpleClassName = clazz.getSimpleName() + ".class";
         String classPath = clazz.getResource(simpleClassName).toString();
-        log.info(classPath);
         if (classPath.startsWith("jar")) {
             String manifestPath = classPath.substring(0, classPath.indexOf("!") + 1) + "/META-INF/MANIFEST.MF";
-            log.info(manifestPath);
             try {
                 Manifest manifest = new Manifest(new URL(manifestPath).openStream());
                 attributes = manifest.getMainAttributes();
                 for (Object key : attributes.keySet()) {
-                    log.info(key.toString() + ": " + attributes.getValue(key.toString()));
+                    if (attributes.getValue(key.toString()) != null) {
+                        log.info(key.toString() + ": " + attributes.getValue(key.toString()));
+                    }
                 }
 
             } catch (MalformedURLException e) {

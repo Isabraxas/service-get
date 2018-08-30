@@ -33,15 +33,15 @@ public class ProcessJobService {
     }
 
     public UpdateJobTemplate process(final JobTemplate data) {
-        log.info("process getStatement: " + data.getAccount() + " " + data.getCorebankAdapter());
+        log.info("process getStatement: " + data.getAccount() + " " + data.getCorebankAdapter()
+            + " " + data.getDateFrom() + " " + data.getDateTo());
 
         CoreBank coreBank = corebankAdapterConfig.getCorebankAdapter(data.getCorebankAdapter());
         if (coreBank == null) {
             return sendInvalidCorebankAdapter(data);
         }
 
-        log.debug("Corebank adapter class: " + coreBank.getClass().getName());
-        log.debug("processing statement from " + data.getDateFrom() + " to " + data.getDateTo());
+        log.debug("adapter class: " + coreBank.getClass().getName());
 
         GetStatementResponse response = coreBank.getStatement(data.getAccount(), data.getType(), data.getCurrency(),
                                                               data.getDateFrom(), data.getDateTo()
@@ -65,6 +65,7 @@ public class ProcessJobService {
         } else {
             if (response.getStatement() != null) {
                 log.debug(response.getStatement().toString());
+
                 //send the statement to sender queue
                 SenderTemplate senderTemplate = new SenderTemplate();
                 senderTemplate.setStatement(statement);
@@ -92,8 +93,6 @@ public class ProcessJobService {
 
     //return with Normal update
     private UpdateJobTemplate sendNormalUpdateJob(final JobTemplate data) {
-        log.info("send updateJob for account: " + data.getAccount() + " " + data.getCorebankAdapter());
-
         UpdateJobTemplate updateJob = new UpdateJobTemplate();
         updateJob.setId(data.getId());
         updateJob.setAccount(data.getAccount());

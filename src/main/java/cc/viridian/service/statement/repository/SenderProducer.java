@@ -22,7 +22,7 @@ public class SenderProducer {
     }
 
     public void send(final String messageKey, final SenderTemplate data) {
-        log.debug("sending Statement for account  " + data.getStatement().getHeader().getAccountCode()
+        log.debug("sending statement for account  " + data.getStatement().getHeader().getAccountCode()
                       + " with key " + messageKey);
 
         Message<SenderTemplate> message = MessageBuilder
