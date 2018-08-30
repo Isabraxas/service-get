@@ -85,9 +85,8 @@ public class CorebankAdapterConfig {
         String classPath = clazz.getResource(simpleClassName).toString();
         log.info(classPath);
         if (classPath.startsWith("jar")) {
-            String manifestPath = classPath.substring(0, classPath.lastIndexOf("!") + 1);
-
-            manifestPath = "/META-INF/MANIFEST.MF";
+            String manifestPath = classPath.substring(0, classPath.indexOf("!") + 1) + "/META-INF/MANIFEST.MF";
+            log.info(manifestPath);
             try {
                 Manifest manifest = new Manifest(new URL(manifestPath).openStream());
                 attributes = manifest.getMainAttributes();
