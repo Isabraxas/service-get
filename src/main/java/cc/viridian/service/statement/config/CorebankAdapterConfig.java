@@ -3,6 +3,8 @@ package cc.viridian.service.statement.config;
 import cc.viridian.provider.AdapterConfig;
 import cc.viridian.provider.CoreBankProvider;
 import cc.viridian.provider.spi.CoreBank;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.jar.Attributes;
@@ -38,6 +40,11 @@ public class CorebankAdapterConfig {
     @Bean
     public HashMap<String, AdapterConfig> initializeAdapters() {
         try {
+            Attributes appAttributes = getAttributesFromManifest(CorebankAdapterConfig.class);
+            for (Object attr : appAttributes.values()) {
+                log.info(attr.toString() + ":" + appAttributes.get(attr));
+            }
+
             CoreBankProvider coreBankProvider = CoreBankProvider.getInstance();
             //loadedClasses = coreBankProvider.initializeAdapters();
             loadedClasses = coreBankProvider.getAdapters();
@@ -48,10 +55,12 @@ public class CorebankAdapterConfig {
             }
 
             for (AdapterConfig config : loadedClasses.values()) {
-                config.loadConfigProperties(activeProfile, springCloudConfigUrl);
+                config.loadConfigProperties(activeProfile, springCloudConfigUrl + "1");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("fatal error reading config properties from config server");
+            log.error(e.getMessage());
+            System.exit(1);
         }
         return loadedClasses;
     }
@@ -69,5 +78,29 @@ public class CorebankAdapterConfig {
         } else {
             return null;
         }
+    }
+
+    private Attributes getAttributesFromManifest(final Class clazz) {
+        Attributes attributes = new Attributes();
+        String simpleClassName = clazz.getSimpleName() + ".class";
+        String classPath = clazz.getResource(simpleClassName).toString();
+
+        if (classPath.startsWith("jar")) {
+            String manifestPath = classPath.substring(0, classPath.lastIndexOf("!") + 1)
+                + "/META-INF/MANIFEST.MF";
+            try {
+                Manifest manifest = new Manifest(new URL(manifestPath).openStream());
+                attributes = manifest.getMainAttributes();
+                for (Object key : attributes.keySet()) {
+                    log.info(key.toString() + ": " + attributes.getValue(key.toString()));
+                }
+
+            } catch (MalformedURLException e) {
+                log.warn("MalformedURLException in: " + manifestPath);
+            } catch (IOException e) {
+                log.warn("IOException with file: " + manifestPath);
+            }
+        }
+        return attributes;
     }
 }
