@@ -46,7 +46,6 @@ public class CorebankAdapterConfig {
             }
 
             CoreBankProvider coreBankProvider = CoreBankProvider.getInstance();
-            //loadedClasses = coreBankProvider.initializeAdapters();
             loadedClasses = coreBankProvider.getAdapters();
             if (loadedClasses.size() == 0) {
                 log.error("Fatal Error. There are zero Corebank adapters loaded in the system.");
@@ -55,7 +54,7 @@ public class CorebankAdapterConfig {
             }
 
             for (AdapterConfig config : loadedClasses.values()) {
-                config.loadConfigProperties(activeProfile, springCloudConfigUrl + "1");
+                config.loadConfigProperties(activeProfile, springCloudConfigUrl);
             }
         } catch (Exception e) {
             log.error("fatal error reading config properties from config server");
@@ -84,10 +83,11 @@ public class CorebankAdapterConfig {
         Attributes attributes = new Attributes();
         String simpleClassName = clazz.getSimpleName() + ".class";
         String classPath = clazz.getResource(simpleClassName).toString();
-
+        log.info(classPath);
         if (classPath.startsWith("jar")) {
-            String manifestPath = classPath.substring(0, classPath.lastIndexOf("!") + 1)
-                + "/META-INF/MANIFEST.MF";
+            String manifestPath = classPath.substring(0, classPath.lastIndexOf("!") + 1);
+
+            manifestPath = "/META-INF/MANIFEST.MF";
             try {
                 Manifest manifest = new Manifest(new URL(manifestPath).openStream());
                 attributes = manifest.getMainAttributes();
