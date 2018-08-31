@@ -48,8 +48,8 @@ public class CorebankAdapterConfig {
         try {
             Attributes appAttributes = getAttributesFromManifest(CorebankAdapterConfig.class);
             applicationVersion = "dev";
-            if (appAttributes.getValue("Build-Version:") != null) {
-                applicationVersion = appAttributes.getValue("Build-Version:").toString();
+            if (appAttributes.getValue("Build-Version") != null) {
+                applicationVersion = appAttributes.getValue("Build-Version").toString();
             }
 
             CoreBankProvider coreBankProvider = CoreBankProvider.getInstance();
