@@ -28,8 +28,14 @@ public class CorebankAdapterConfig {
 
     private HashMap<String, AdapterConfig> loadedClasses;
 
+    private String applicationVersion;
+
     public HashMap<String, AdapterConfig> getLoadedClasses() {
         return loadedClasses;
+    }
+
+    public String getApplicationVersion() {
+        return applicationVersion;
     }
 
     /**
@@ -41,8 +47,9 @@ public class CorebankAdapterConfig {
     public HashMap<String, AdapterConfig> initializeAdapters() {
         try {
             Attributes appAttributes = getAttributesFromManifest(CorebankAdapterConfig.class);
-            for (Object attr : appAttributes.values()) {
-                log.info(attr.toString() + ":" + appAttributes.get(attr));
+            applicationVersion = "dev";
+            if (appAttributes.getValue("Build-Version:") != null) {
+                applicationVersion = appAttributes.getValue("Build-Version:").toString();
             }
 
             CoreBankProvider coreBankProvider = CoreBankProvider.getInstance();
