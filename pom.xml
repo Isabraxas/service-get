@@ -19,7 +19,7 @@
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
         <cayenne.version>4.0.RC1</cayenne.version>
         <artifact.version>0.1.9999</artifact.version>
-        <provider.corebank.version>0.1.74</provider.corebank.version>
+        <provider.corebank.version>0.1.77</provider.corebank.version>
     </properties>
 
     <parent>

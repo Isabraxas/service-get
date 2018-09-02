@@ -77,7 +77,6 @@ public class CorebankAdapterConfig {
      * @param corebankId
      * @return
      */
-    //@Bean
     public CoreBank getCorebankAdapter(final String corebankId) {
         if (loadedClasses.containsKey(corebankId)) {
             return loadedClasses.get(corebankId).getAdapter();

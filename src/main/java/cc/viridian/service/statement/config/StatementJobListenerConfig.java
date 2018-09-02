@@ -30,9 +30,6 @@ public class StatementJobListenerConfig {
     @Value("${topic.statement.jobs}")
     private String topicStatementJobs;
 
-    //@Autowired
-    //ObjectMapper objectMapper;
-
     @Autowired
     private MappingJackson2HttpMessageConverter springMvcJacksonConverter;
 
@@ -56,12 +53,7 @@ public class StatementJobListenerConfig {
     public ConsumerFactory<String, JobTemplate> consumerFactory() {
         log.info("ConsumerFactory : " + topicStatementJobs);
 
-        //ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().build();
-        //objectMapper.registerModule(new JavaTimeModule());
-        //objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
         ObjectMapper objectMapper = springMvcJacksonConverter.getObjectMapper();
-        //objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         JsonDeserializer<JobTemplate> jsonDeserializer = new JsonDeserializer(JobTemplate.class, objectMapper);
@@ -72,11 +64,6 @@ public class StatementJobListenerConfig {
             jsonDeserializer);
 
         return consumerFactory;
-
-        //return new DefaultKafkaConsumerFactory<>(
-        //    consumerConfigs(),
-        //    new StringDeserializer(),
-        //    new JsonDeserializer<>(JobTemplate.class));
     }
 
     @Bean
