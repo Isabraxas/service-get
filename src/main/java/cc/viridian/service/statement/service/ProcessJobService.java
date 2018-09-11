@@ -63,7 +63,7 @@ public class ProcessJobService {
         }
     }
 
-    private void sendStatement(GetStatementResponse response, JobTemplate data) {
+    private void sendStatement(final GetStatementResponse response, final JobTemplate data) {
         if (response.getStatement() != null) {
             log.debug(response.getStatement().toString());
 
@@ -86,7 +86,7 @@ public class ProcessJobService {
         }
     }
 
-    private void updateJobWithError(GetStatementResponse response, JobTemplate data) {
+    private void updateJobWithError(final GetStatementResponse response, final JobTemplate data) {
         log.error(response.getErrorCode().toString() + " " + response.getErrorDesc());
 
         UpdateJobTemplate updateJob = new UpdateJobTemplate();
@@ -102,7 +102,7 @@ public class ProcessJobService {
         updateJobProducer.send(data.getId().toString(), updateJob);
     }
 
-    private void updateJobSuccess(GetStatementResponse response, JobTemplate data) {
+    private void updateJobSuccess(final GetStatementResponse response, final JobTemplate data) {
         log.info("success: " + response.getErrorDesc());
 
         UpdateJobTemplate updateJob = new UpdateJobTemplate();
